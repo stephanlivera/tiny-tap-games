@@ -111,7 +111,6 @@
 
   const gridEl = document.getElementById("grid");
   const promptEl = document.getElementById("prompt");
-  const sampleEl = document.getElementById("sample");
   const celebrateEl = document.getElementById("celebrate");
   const doneArt = document.getElementById("done-art");
   const doneCaption = document.getElementById("done-caption");
@@ -184,7 +183,6 @@
     resolving = false;
     finished = false;
     celebrateEl.classList.remove("show");
-    sampleEl.textContent = String(PAIR_COUNT);
     playfield.dataset.count = String(PAIR_COUNT * 2);
     gridEl.replaceChildren();
     updatePrompt();

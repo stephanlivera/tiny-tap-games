@@ -56,6 +56,22 @@ LINES = {
     "rabbit": "Rabbit.",
     "mouse": "Mouse.",
     "frog": "Frog.",
+    "tap-a": "Tap A.",
+    "tap-b": "Tap B.",
+    "tap-c": "Tap C.",
+    "tap-d": "Tap D.",
+    "tap-f": "Tap F.",
+    "tap-o": "Tap O.",
+    "tap-r": "Tap R.",
+    "tap-s": "Tap S.",
+    "a-for-apple": "A is for apple.",
+    "b-for-balloon": "B is for balloon.",
+    "c-for-cat": "C is for cat.",
+    "d-for-duck": "D is for duck.",
+    "f-for-fish": "F is for fish.",
+    "o-for-owl": "O is for owl.",
+    "r-for-rabbit": "R is for rabbit.",
+    "s-for-star": "S is for star.",
 }
 
 

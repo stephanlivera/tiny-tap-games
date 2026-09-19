@@ -12,9 +12,9 @@
     <meta name="apple-mobile-web-app-title" content="Tiny Tap" />
     <meta
       name="description"
-      content="Match the Pairs: flip cards to find matching animals and shapes."
+      content="Letter Hunt: tap the letter you are asked for."
     />
-    <title>Match the Pairs · Tiny Tap Games</title>
+    <title>Letter Hunt · Tiny Tap Games</title>
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../../css/app.css" />
   </head>
@@ -30,8 +30,8 @@
           </svg>
         </a>
         <div class="prompt">
-          <p class="kicker">Match the Pairs</p>
-          <h1 id="prompt">Find the pairs</h1>
+          <p class="kicker">Letter Hunt</p>
+          <h1 id="prompt">Tap A</h1>
         </div>
         <button class="icon-btn sound-btn" type="button" data-sound-toggle aria-pressed="false" aria-label="Turn sound off">
           <svg viewBox="0 0 32 32" aria-hidden="true">
@@ -40,15 +40,15 @@
             <path class="sound-slash" d="M8 7.5l16 17" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
           </svg>
         </button>
+        <div class="count-pill" id="sample" aria-hidden="true">A</div>
       </header>
 
-      <section class="playfield match-board" id="playfield" aria-label="Cards">
-        <div class="match-grid" id="grid"></div>
+      <section class="playfield" id="playfield" aria-label="Letters">
         <div class="celebrate" id="celebrate">
           <div class="celebrate-card">
-            <div class="peek-row" id="done-art"></div>
-            <div class="word" id="done-word">matched</div>
-            <p class="caption" id="done-caption">You found all the pairs</p>
+            <div class="giant-shape" id="done-art"></div>
+            <div class="word" id="done-word">A</div>
+            <p class="caption" id="done-caption">A is for apple</p>
             <button class="next-btn" id="next" type="button">Next</button>
           </div>
         </div>

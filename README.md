@@ -25,6 +25,7 @@ On a tablet on the same network, use the computer's LAN address instead of `loca
 | Shape Hunt | Playable | Circle, square, triangle, star |
 | Peekaboo Doors | Playable | Animal words; cause-and-effect tapping |
 | Match the Pairs | Playable | Matching animals and shapes |
+| Letter Hunt | Playable | Letter names A, B, C, D, F, O, R, S |
 
 Count the Things: tap each object once. The tally grows, then the round shows the numeral and the English word (`three`, `four`, …).
 
@@ -37,6 +38,8 @@ Peekaboo Doors: tap any door to open it. An animal and its English word are behi
 Each game speaks the instruction in Australian English (Natasha). Tap the prompt to hear it again. The speaker button mutes. First tap on a game page unlocks sound on iPad.
 
 Match the Pairs: flip two cards. Matching pairs stay up. Mismatches flip back. When every pair is found, celebrate and tap Next for a new shuffle.
+
+Letter Hunt: tap the named letter among four big blocks. The round then says the letter and a word (`A is for apple`).
 
 ## Hosting
 
