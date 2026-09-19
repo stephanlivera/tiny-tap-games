@@ -32,7 +32,9 @@ Balloon Pop: pop every balloon of the colour in the prompt. Other colours wobble
 
 Shape Hunt: tap the named shape. Other shapes wobble and stay.
 
-Peekaboo Doors: tap any door to open it. An animal and its English word are behind it. Sound is off on purpose.
+Peekaboo Doors: tap any door to open it. An animal and its English word are behind it.
+
+Each game speaks the instruction in Australian English (Natasha). Tap the prompt to hear it again. The speaker button mutes. First tap on a game page unlocks sound on iPad.
 
 Match the Pairs: flip two cards. Matching pairs stay up. Mismatches flip back. When every pair is found, celebrate and tap Next for a new shuffle.
 

@@ -147,6 +147,9 @@
     round.finished = false;
     celebrateEl.classList.remove("show");
     promptEl.textContent = "Who is hiding?";
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.say("tap-a-door");
+    }
     doorsEl.replaceChildren();
 
     round.animals.forEach(function (animal) {
@@ -187,6 +190,9 @@
     door.setAttribute("aria-label", animal.name);
     const article = /^[aeiou]/i.test(animal.name) ? "An " : "A ";
     promptEl.textContent = article + animal.name + "!";
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.word(animal.name);
+    }
     round.opened += 1;
 
     if (round.opened >= round.animals.length) {
@@ -203,8 +209,11 @@
       .join("");
     doneCaption.textContent = "You found the " + joinNames(round.animals);
     window.setTimeout(function () {
+      if (window.TinyTapVoice) {
+        window.TinyTapVoice.word("well-done");
+      }
       celebrateEl.classList.add("show");
-    }, 520);
+    }, 900);
   }
 
   nextBtn.addEventListener("click", function (event) {

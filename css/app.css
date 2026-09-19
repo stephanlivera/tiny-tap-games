@@ -214,16 +214,58 @@ main.page {
   text-decoration: none;
 }
 
+.sound-btn {
+  width: 3.6rem;
+  height: 3.6rem;
+  color: var(--ink);
+  background: var(--white);
+}
+
+.sound-btn svg {
+  display: block;
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.sound-btn .sound-slash {
+  opacity: 0;
+}
+
+.sound-btn[aria-pressed="true"] {
+  color: var(--paper);
+  background: var(--ink);
+  box-shadow: 0 5px 0 #1a140f;
+}
+
+.sound-btn[aria-pressed="true"] .sound-waves {
+  opacity: 0;
+}
+
+.sound-btn[aria-pressed="true"] .sound-slash {
+  opacity: 1;
+}
+
 @media (min-width: 640px) {
   .icon-btn {
     width: 3.4rem;
     height: 3.4rem;
+  }
+
+  .sound-btn {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+
+  .sound-btn svg {
+    width: 2.2rem;
+    height: 2.2rem;
   }
 }
 
 .prompt {
   flex: 1;
   min-width: 0;
+  cursor: pointer;
 }
 
 .prompt h1 {
@@ -710,6 +752,11 @@ main.page {
     min-width: 44px;
     border-radius: 0.9rem;
     font-size: 1.35rem;
+  }
+
+  .sound-btn svg {
+    width: 1.45rem;
+    height: 1.45rem;
   }
 
   .door {

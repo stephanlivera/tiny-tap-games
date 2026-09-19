@@ -110,6 +110,9 @@
     celebrateEl.classList.remove("show");
     clearItems();
     promptEl.textContent = "Tap the " + target.name;
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.say("tap-the-" + target.name);
+    }
     sampleEl.style.setProperty("--pill", "#fffaf3");
     sampleEl.innerHTML = target.art();
     playfield.dataset.target = target.id;
@@ -151,6 +154,9 @@
     doneArt.innerHTML = target.art();
     doneWord.textContent = target.name;
     doneCaption.textContent = "You found the " + target.name;
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.word(target.name);
+    }
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
     }, 280);

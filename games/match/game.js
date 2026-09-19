@@ -188,6 +188,9 @@
     playfield.dataset.count = String(PAIR_COUNT * 2);
     gridEl.replaceChildren();
     updatePrompt();
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.say("find-the-pairs");
+    }
 
     cards.forEach(function (pair, index) {
       const button = document.createElement("button");
@@ -234,6 +237,9 @@
       flipped = [];
       resolving = false;
       updatePrompt();
+      if (window.TinyTapVoice) {
+        window.TinyTapVoice.word(first.dataset.id);
+      }
       if (matchedCount >= PAIR_COUNT) {
         finishRound();
       }
@@ -268,8 +274,11 @@
       .join("");
     doneCaption.textContent = "You found all the pairs";
     window.setTimeout(function () {
+      if (window.TinyTapVoice) {
+        window.TinyTapVoice.word("well-done");
+      }
       celebrateEl.classList.add("show");
-    }, 320);
+    }, 900);
   }
 
   nextBtn.addEventListener("click", function (event) {

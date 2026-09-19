@@ -99,6 +99,11 @@
 
     promptColor.textContent = target.name;
     promptEl.style.setProperty("--prompt-color", target.text);
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.say(
+        "pop-the-" + target.name + (targetCount === 1 ? "-balloon" : "-balloons")
+      );
+    }
     sampleEl.style.setProperty("--pill", target.fill);
     sampleEl.style.setProperty("--pill-ink", target.ink);
     sampleEl.replaceChildren();
@@ -136,6 +141,9 @@
     }
 
     balloon.classList.add("burst");
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.sfx("pop");
+    }
     round.remaining -= 1;
 
     if (round.remaining <= 0) {
@@ -154,8 +162,13 @@
       target.name +
       (round.total === 1 ? " balloon" : " balloons");
     window.setTimeout(function () {
+      if (window.TinyTapVoice) {
+        window.TinyTapVoice.word(target.name);
+      }
+    }, 240);
+    window.setTimeout(function () {
       celebrateEl.classList.add("show");
-    }, 320);
+    }, 420);
   }
 
   nextBtn.addEventListener("click", function (event) {

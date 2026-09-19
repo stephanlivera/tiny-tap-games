@@ -131,6 +131,9 @@
     tallyEl.textContent = "0";
     promptEl.textContent = "Tap the " + noun(round.set, round.total);
     playfield.dataset.count = String(round.total);
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.say("tap-the-" + noun(round.set, round.total));
+    }
     clearItems();
 
     for (let i = 0; i < round.total; i += 1) {
@@ -174,6 +177,9 @@
     doneNum.textContent = String(round.total);
     doneWord.textContent = NUMBER_WORDS[round.total];
     doneCaption.textContent = round.total + " " + noun(round.set, round.total);
+    if (window.TinyTapVoice) {
+      window.TinyTapVoice.word(NUMBER_WORDS[round.total]);
+    }
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
     }, 280);
