@@ -24,7 +24,7 @@ On a tablet on the same network, use the computer's LAN address instead of `loca
 | Balloon Pop | Playable | Colours (red, blue, yellow, green, purple) |
 | Shape Hunt | Playable | Circle, square, triangle, star |
 | Peekaboo Doors | Playable | Animal words; cause-and-effect tapping |
-| Match the Pairs | Coming later | Matching animals and shapes |
+| Match the Pairs | Playable | Matching animals and shapes |
 
 Count the Things: tap each object once. The tally grows, then the round shows the numeral and the English word (`three`, `four`, …).
 
@@ -33,6 +33,8 @@ Balloon Pop: pop every balloon of the colour in the prompt. Other colours wobble
 Shape Hunt: tap the named shape. Other shapes wobble and stay.
 
 Peekaboo Doors: tap any door to open it. An animal and its English word are behind it. Sound is off on purpose.
+
+Match the Pairs: flip two cards. Matching pairs stay up. Mismatches flip back. When every pair is found, celebrate and tap Next for a new shuffle.
 
 ## Hosting
 
