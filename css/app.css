@@ -831,6 +831,103 @@ body.home .game-card.playable:active {
   box-shadow: 0 6px 0 rgba(44, 33, 24, 0.12);
 }
 
+
+/* Match the Pairs */
+.playfield.match-board {
+  align-content: center;
+  justify-content: center;
+  padding: clamp(0.5rem, 2cqi, 1.1rem);
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.4rem, 1.8cqi, 1rem);
+  width: min(100%, 44rem);
+  max-height: 100%;
+  align-content: center;
+}
+
+.match-card {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  perspective: 900px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.match-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 1.15rem;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 360ms ease;
+  box-shadow: 0 6px 0 rgba(44, 33, 24, 0.1);
+}
+
+.match-front {
+  background: var(--white);
+  transform: rotateY(180deg);
+  padding: 10%;
+}
+
+.match-back {
+  background: var(--teal);
+  transform: rotateY(0deg);
+}
+
+.match-front .art,
+.match-back .art {
+  width: 100%;
+  height: 100%;
+}
+
+.match-card.flipped .match-front,
+.match-card.matched .match-front {
+  transform: rotateY(0deg);
+}
+
+.match-card.flipped .match-back,
+.match-card.matched .match-back {
+  transform: rotateY(-180deg);
+}
+
+.match-card.matched .match-front {
+  background: color-mix(in srgb, var(--mustard) 28%, var(--white));
+  box-shadow: 0 6px 0 rgba(44, 33, 24, 0.08);
+}
+
+.match-card.matched .match-front .art {
+  animation: pop 420ms cubic-bezier(0.2, 1.4, 0.3, 1);
+}
+
+@media (max-width: 520px) {
+  .match-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 22rem);
+  }
+}
+
+@media (max-height: 500px) {
+  .match-grid {
+    gap: 0.35rem;
+  }
+
+  .match-face {
+    border-width: 2px;
+    border-radius: 0.85rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .item.pop .art,
   .item .num,
@@ -838,7 +935,9 @@ body.home .game-card.playable:active {
   .balloon,
   .door-panel,
   .door.open .door-inside .art,
-  .door.wiggle .door-inside .art {
+  .door.wiggle .door-inside .art,
+  .match-face,
+  .match-card.matched .match-front .art {
     animation: none;
     transition: none;
   }
