@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tiny Tap Games">
+  <rect width="64" height="64" rx="16" fill="#e25b3a"/>
+  <circle cx="22" cy="24" r="7" fill="#f4efe4"/>
+  <circle cx="42" cy="24" r="7" fill="#f4efe4"/>
+  <path d="M18 40c6 10 22 10 28 0" fill="none" stroke="#f4efe4" stroke-width="5" stroke-linecap="round"/>
+</svg>

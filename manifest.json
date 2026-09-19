@@ -1,0 +1,17 @@
+{
+  "name": "Tiny Tap Games",
+  "short_name": "Tiny Tap",
+  "description": "Simple educational tap games for little hands.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4efe4",
+  "theme_color": "#e25b3a",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
