@@ -734,6 +734,103 @@ main.page {
   }
 }
 
+body.home {
+  background-color: #e0dac8;
+  background-image:
+    radial-gradient(ellipse 90% 42% at 72% -8%, rgba(255, 250, 240, 0.7), transparent 62%),
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.32) 0 1.4px, transparent 2.1px),
+    radial-gradient(circle at 72% 64%, rgba(44, 33, 24, 0.035) 0 1.1px, transparent 2px);
+  background-size: auto, 22px 22px, 16px 16px;
+  background-repeat: no-repeat, repeat, repeat;
+  background-position: top center, 0 0, 0 0;
+}
+
+.home-head {
+  max-width: 34rem;
+}
+
+body.home .site-title {
+  text-shadow: 0 1px 0 rgba(255, 250, 243, 0.65);
+}
+
+.shelf {
+  margin-top: 1.6rem;
+}
+
+body.home .game-grid {
+  margin-top: 0;
+}
+
+body.home .game-card {
+  position: relative;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--white);
+}
+
+body.home .game-card.playable,
+body.home .game-card.playable.sky-card,
+body.home .game-card.playable.shape-card,
+body.home .game-card.playable.peek-card {
+  background: var(--white);
+}
+
+body.home .game-card .badge {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 2;
+}
+
+.card-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 38%;
+}
+
+.card-copy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  padding: 2.4rem 1.05rem 0.85rem;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 250, 243, 0.88) 42%,
+    #fffaf3 78%
+  );
+}
+
+body.home .game-card h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 3.4vw, 1.7rem);
+}
+
+body.home .game-card p {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+}
+
+@media (max-height: 720px) {
+  .card-photo {
+    aspect-ratio: 16 / 10;
+  }
+
+  body.home .game-card p {
+    display: none;
+  }
+}
+
+body.home .game-card.playable:active {
+  transform: translateY(3px);
+  box-shadow: 0 6px 0 rgba(44, 33, 24, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .item.pop .art,
   .item .num,

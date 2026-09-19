@@ -19,75 +19,62 @@
     <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="css/app.css" />
   </head>
-  <body>
+  <body class="home">
     <main class="page">
-      <p class="kicker">For little hands</p>
-      <h1 class="site-title">Tiny Tap Games</h1>
-      <p class="lede">
-        Short, quiet games for young kids.
-      </p>
+      <header class="home-head">
+        <p class="kicker">For little hands</p>
+        <h1 class="site-title">Tiny Tap Games</h1>
+        <p class="lede">
+          Short, quiet games for young kids.
+        </p>
+      </header>
 
-      <section class="game-grid" aria-label="Games">
-        <a class="game-card playable" href="games/count/">
-          <div class="game-card-top">
+      <section class="shelf" aria-label="Games">
+        <div class="game-grid">
+          <a class="game-card playable" href="games/count/">
             <span class="badge">Play</span>
-            <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true">
-              <circle cx="18" cy="40" r="12" fill="#e25b3a" />
-              <circle cx="38" cy="28" r="12" fill="#1f9a8a" />
-              <circle cx="50" cy="46" r="10" fill="#e8b931" stroke="#2c2118" stroke-width="3" />
-            </svg>
-          </div>
-          <h2>Count the Things</h2>
-          <p>Tap 1 to 5 apples, ducks, and stars. Learn numbers and English words.</p>
-        </a>
+            <img class="card-photo" src="assets/home/count.webp" alt="" width="840" height="630" />
+            <div class="card-copy">
+              <h2>Count the Things</h2>
+              <p>Tap 1 to 5 apples, ducks, and stars.</p>
+            </div>
+          </a>
 
-        <a class="game-card playable sky-card" href="games/balloon/">
-          <div class="game-card-top">
+          <a class="game-card playable" href="games/balloon/">
             <span class="badge">Play</span>
-            <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true">
-              <ellipse cx="22" cy="24" rx="12" ry="15" fill="#e25b3a" />
-              <ellipse cx="42" cy="30" rx="11" ry="14" fill="#3b7ddd" />
-              <path d="M22 39c0 8 6 9 3 14" fill="none" stroke="#2c2118" stroke-width="3" stroke-linecap="round" />
-              <path d="M42 44c0 7 6 8 3 12" fill="none" stroke="#2c2118" stroke-width="3" stroke-linecap="round" />
-            </svg>
-          </div>
-          <h2>Balloon Pop</h2>
-          <p>Pop the colour you are asked for. Learn red, blue, yellow, green, and purple.</p>
-        </a>
+            <img class="card-photo" src="assets/home/balloon.webp" alt="" width="840" height="630" />
+            <div class="card-copy">
+              <h2>Balloon Pop</h2>
+              <p>Pop the colour you are asked for.</p>
+            </div>
+          </a>
 
-        <a class="game-card playable shape-card" href="games/shapes/">
-          <div class="game-card-top">
+          <a class="game-card playable" href="games/shapes/">
             <span class="badge">Play</span>
-            <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true">
-              <circle cx="18" cy="22" r="11" fill="#1f9a8a" stroke="#2c2118" stroke-width="3" />
-              <rect x="34" y="12" width="22" height="22" rx="4" fill="#1f9a8a" stroke="#2c2118" stroke-width="3" />
-              <polygon points="18,56 6,38 30,38" fill="#1f9a8a" stroke="#2c2118" stroke-width="3" stroke-linejoin="round" />
-              <polygon points="48,34 52,46 64,46 54,54 58,64 48,58 38,64 42,54 32,46 44,46" fill="#1f9a8a" />
-            </svg>
-          </div>
-          <h2>Shape Hunt</h2>
-          <p>Tap the circle, square, triangle, or star.</p>
-        </a>
+            <img class="card-photo" src="assets/home/shapes.webp" alt="" width="840" height="630" />
+            <div class="card-copy">
+              <h2>Shape Hunt</h2>
+              <p>Tap the circle, square, triangle, or star.</p>
+            </div>
+          </a>
 
-        <a class="game-card playable peek-card" href="games/peekaboo/">
-          <div class="game-card-top">
+          <a class="game-card playable" href="games/peekaboo/">
             <span class="badge">Play</span>
-            <svg class="thumb" viewBox="0 0 64 64" aria-hidden="true">
-              <rect x="14" y="8" width="36" height="48" rx="6" fill="#c47a48" stroke="#2c2118" stroke-width="3" />
-              <rect x="20" y="14" width="24" height="16" rx="3" fill="#d08954" />
-              <circle cx="40" cy="40" r="4" fill="#e8b931" stroke="#2c2118" stroke-width="3" />
-            </svg>
-          </div>
-          <h2>Peekaboo Doors</h2>
-          <p>Tap a door. An animal is hiding, with its English word.</p>
-        </a>
+            <img class="card-photo" src="assets/home/peekaboo.webp" alt="" width="840" height="630" />
+            <div class="card-copy">
+              <h2>Peekaboo Doors</h2>
+              <p>Tap a door. An animal is hiding.</p>
+            </div>
+          </a>
 
-        <div class="game-card soon" aria-disabled="true">
-          <div class="game-card-top">
+          <div class="game-card soon" aria-disabled="true">
             <span class="badge soon">Soon</span>
+            <img class="card-photo" src="assets/home/match.webp" alt="" width="840" height="630" />
+            <div class="card-copy">
+              <h2>Match the Pairs</h2>
+              <p>Coming later.</p>
+            </div>
           </div>
-          <h2>Match the Pairs</h2>
-          <p>Find two of the same animal or shape. Coming later.</p>
         </div>
       </section>
     </main>
