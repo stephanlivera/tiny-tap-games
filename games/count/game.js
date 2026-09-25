@@ -1,84 +1,20 @@
 (function () {
   const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five"];
 
+  const ART = window.TinyTapArt;
+
   const SETS = [
-    {
-      id: "apple",
-      singular: "apple",
-      plural: "apples",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<ellipse cx="50" cy="60" rx="30" ry="32" fill="#e25b3a"/>' +
-          '<ellipse cx="38" cy="50" rx="8" ry="12" fill="#f4efe4" opacity="0.35"/>' +
-          '<rect x="47" y="20" width="6" height="18" rx="3" fill="#6b4226" transform="rotate(8 50 29)"/>' +
-          '<path d="M56 28c12-8 16 8 6 12" fill="#6aab4d"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "duck",
-      singular: "duck",
-      plural: "ducks",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<ellipse cx="54" cy="64" rx="28" ry="18" fill="#e8b931"/>' +
-          '<circle cx="34" cy="42" r="16" fill="#e8b931"/>' +
-          '<circle cx="28" cy="38" r="3.2" fill="#2c2118"/>' +
-          '<path d="M18 42h14l-6 8z" fill="#e25b3a"/>' +
-          '<ellipse cx="70" cy="58" rx="10" ry="6" fill="#f4c95d"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "star",
-      singular: "star",
-      plural: "stars",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<polygon points="50,12 61,38 90,38 66,56 75,84 50,68 25,84 34,56 10,38 39,38" fill="#e8b931" stroke="#2c2118" stroke-width="3" stroke-linejoin="round"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "balloon",
-      singular: "balloon",
-      plural: "balloons",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<ellipse cx="50" cy="42" rx="24" ry="28" fill="#5ea9d6"/>' +
-          '<ellipse cx="42" cy="34" rx="7" ry="11" fill="#f4efe4" opacity="0.35"/>' +
-          '<path d="M50 70l-5 6h10z" fill="#5ea9d6"/>' +
-          '<path d="M50 76c0 10 8 12 4 18" fill="none" stroke="#2c2118" stroke-width="3" stroke-linecap="round"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "fish",
-      singular: "fish",
-      plural: "fish",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<ellipse cx="46" cy="52" rx="26" ry="16" fill="#1f9a8a"/>' +
-          '<path d="M72 52l18-14v28z" fill="#167a6d"/>' +
-          '<circle cx="34" cy="48" r="3.2" fill="#2c2118"/>' +
-          '<path d="M46 38c6 4 6 12 0 16" fill="none" stroke="#f4efe4" stroke-width="3"/>' +
-          "</svg>"
-        );
-      },
-    },
+    { id: "apple", singular: "apple", plural: "apples", art: function () { return ART.get("apple"); } },
+    { id: "duck", singular: "duck", plural: "ducks", art: function () { return ART.get("duck"); } },
+    { id: "star", singular: "star", plural: "stars", art: function () { return ART.get("star"); } },
+    { id: "balloon", singular: "balloon", plural: "balloons", art: function () { return ART.get("balloon", ART.colors.blue); } },
+    { id: "fish", singular: "fish", plural: "fish", art: function () { return ART.get("fish"); } },
   ];
 
   const playfield = document.getElementById("playfield");
   const promptEl = document.getElementById("prompt");
+  const sampleEl = document.getElementById("sample");
+  const doneArt = document.getElementById("done-art");
   const tallyEl = document.getElementById("tally");
   const celebrateEl = document.getElementById("celebrate");
   const doneNum = document.getElementById("done-num");
@@ -130,6 +66,7 @@
     celebrateEl.classList.remove("show");
     tallyEl.textContent = "0";
     promptEl.textContent = "Tap the " + noun(round.set, round.total);
+    sampleEl.innerHTML = round.set.art();
     playfield.dataset.count = String(round.total);
     if (window.TinyTapVoice) {
       window.TinyTapVoice.say("tap-the-" + noun(round.set, round.total));
@@ -166,6 +103,10 @@
     item.classList.add("counted");
     item.querySelector(".num").textContent = String(round.found);
     tallyEl.textContent = String(round.found);
+    if (window.TinyTapFx) {
+      window.TinyTapFx.good(item);
+      window.TinyTapFx.bump(tallyEl);
+    }
 
     if (round.found >= round.total) {
       finishRound();
@@ -177,11 +118,15 @@
     doneNum.textContent = String(round.total);
     doneWord.textContent = NUMBER_WORDS[round.total];
     doneCaption.textContent = round.total + " " + noun(round.set, round.total);
+    doneArt.innerHTML = round.set.art().repeat(round.total);
     if (window.TinyTapVoice) {
       window.TinyTapVoice.word(NUMBER_WORDS[round.total]);
     }
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
+      if (window.TinyTapFx) {
+        window.TinyTapFx.win(playfield);
+      }
     }, 280);
   }
 

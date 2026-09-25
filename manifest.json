@@ -4,8 +4,8 @@
   "description": "Simple educational tap games for little hands.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f4efe4",
-  "theme_color": "#e25b3a",
+  "background_color": "#fdf3e1",
+  "theme_color": "#fdf3e1",
   "icons": [
     {
       "src": "assets/favicon.svg",

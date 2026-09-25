@@ -1,68 +1,14 @@
 (function () {
-  const FILL = "#1f9a8a";
-  const STROKE = "#2c2118";
+  const ART = window.TinyTapArt;
+
+  // Every shape in a round shares one colour, so colour never gives the answer away.
+  const ROUND_COLORS = ["blue", "red", "green", "purple", "teal", "orange"];
 
   const SHAPES = [
-    {
-      id: "circle",
-      name: "circle",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<circle cx="50" cy="50" r="32" fill="' +
-          FILL +
-          '" stroke="' +
-          STROKE +
-          '" stroke-width="3"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "square",
-      name: "square",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<rect x="22" y="22" width="56" height="56" rx="8" fill="' +
-          FILL +
-          '" stroke="' +
-          STROKE +
-          '" stroke-width="3"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "triangle",
-      name: "triangle",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<polygon points="50,18 86,80 14,80" fill="' +
-          FILL +
-          '" stroke="' +
-          STROKE +
-          '" stroke-width="3" stroke-linejoin="round"/>' +
-          "</svg>"
-        );
-      },
-    },
-    {
-      id: "star",
-      name: "star",
-      art: function () {
-        return (
-          '<svg class="art" viewBox="0 0 100 100" aria-hidden="true">' +
-          '<polygon points="50,14 61,38 88,38 66,55 74,82 50,66 26,82 34,55 12,38 39,38" fill="' +
-          FILL +
-          '" stroke="' +
-          STROKE +
-          '" stroke-width="3" stroke-linejoin="round"/>' +
-          "</svg>"
-        );
-      },
-    },
+    { id: "circle", name: "circle", art: "circle" },
+    { id: "square", name: "square", art: "square" },
+    { id: "triangle", name: "triangle", art: "triangle" },
+    { id: "star", name: "star", art: "shapeStar" },
   ];
 
   const playfield = document.getElementById("playfield");
@@ -74,7 +20,7 @@
   const doneCaption = document.getElementById("done-caption");
   const nextBtn = document.getElementById("next");
 
-  let round = { target: SHAPES[0], finished: false };
+  let round = { target: SHAPES[0], fill: ART.colors.blue, finished: false };
   let lastId = "";
 
   function shuffle(list) {
@@ -86,6 +32,10 @@
       copy[j] = tmp;
     }
     return copy;
+  }
+
+  function shapeArt(shape) {
+    return ART.get(shape.art, round.fill);
   }
 
   function pickTarget() {
@@ -104,6 +54,7 @@
   function startRound() {
     const target = pickTarget();
     round.target = target;
+    round.fill = ART.colors[ROUND_COLORS[Math.floor(Math.random() * ROUND_COLORS.length)]];
     round.finished = false;
     lastId = target.id;
 
@@ -113,8 +64,7 @@
     if (window.TinyTapVoice) {
       window.TinyTapVoice.say("tap-the-" + target.name);
     }
-    sampleEl.style.setProperty("--pill", "#fffaf3");
-    sampleEl.innerHTML = target.art();
+    sampleEl.innerHTML = shapeArt(target);
     playfield.dataset.target = target.id;
     playfield.dataset.count = "4";
 
@@ -125,7 +75,7 @@
       button.dataset.shape = shape.id;
       button.style.setProperty("--tilt", (Math.random() * 10 - 5).toFixed(1) + "deg");
       button.setAttribute("aria-label", shape.name);
-      button.innerHTML = shape.art();
+      button.innerHTML = shapeArt(shape);
       button.addEventListener("pointerup", onTap);
       playfield.appendChild(button);
     });
@@ -145,13 +95,16 @@
     }
 
     item.classList.add("found");
+    if (window.TinyTapFx) {
+      window.TinyTapFx.good(item);
+    }
     finishRound();
   }
 
   function finishRound() {
     round.finished = true;
     const target = round.target;
-    doneArt.innerHTML = target.art();
+    doneArt.innerHTML = shapeArt(target);
     doneWord.textContent = target.name;
     doneCaption.textContent = "You found the " + target.name;
     if (window.TinyTapVoice) {
@@ -159,6 +112,9 @@
     }
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
+      if (window.TinyTapFx) {
+        window.TinyTapFx.win(playfield);
+      }
     }, 280);
   }
 

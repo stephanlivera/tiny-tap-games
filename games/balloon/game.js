@@ -1,18 +1,18 @@
 (function () {
   const COLORS = [
-    { id: "red", name: "red", fill: "#e25b3a", text: "#c4472b", ink: "#fffaf3" },
-    { id: "blue", name: "blue", fill: "#3b7ddd", text: "#215ca8", ink: "#fffaf3" },
-    { id: "yellow", name: "yellow", fill: "#e8b931", text: "#8a6a10", ink: "#2c2118" },
-    { id: "green", name: "green", fill: "#3d9a4a", text: "#2c7a37", ink: "#fffaf3" },
-    { id: "purple", name: "purple", fill: "#8b5cd6", text: "#6b3db0", ink: "#fffaf3" },
+    { id: "red", name: "red", fill: "#e2513a", text: "#c23d28" },
+    { id: "blue", name: "blue", fill: "#3a78c9", text: "#2c5fa3" },
+    { id: "yellow", name: "yellow", fill: "#f2b632", text: "#9a6d0c" },
+    { id: "green", name: "green", fill: "#5aa66a", text: "#3a7f4a" },
+    { id: "purple", name: "purple", fill: "#8d62c9", text: "#6d45a8" },
   ];
 
   const SLOTS = [
-    { x: "6%", y: "16%" },
-    { x: "38%", y: "6%" },
-    { x: "70%", y: "14%" },
-    { x: "16%", y: "50%" },
-    { x: "54%", y: "46%" },
+    { x: "5%", y: "30%" },
+    { x: "24%", y: "13%" },
+    { x: "43%", y: "34%" },
+    { x: "62%", y: "15%" },
+    { x: "78%", y: "31%" },
   ];
 
   const playfield = document.getElementById("playfield");
@@ -45,18 +45,7 @@
   }
 
   function balloonSvg(color) {
-    return (
-      '<svg class="art" viewBox="0 0 80 120" aria-hidden="true">' +
-      '<ellipse cx="40" cy="42" rx="28" ry="34" fill="' +
-      color.fill +
-      '"/>' +
-      '<ellipse cx="30" cy="30" rx="8" ry="12" fill="#fffaf3" opacity="0.32"/>' +
-      '<path d="M40 76l-6 8h12z" fill="' +
-      color.fill +
-      '"/>' +
-      '<path d="M40 84c0 14 10 16 6 26" fill="none" stroke="#2c2118" stroke-width="3" stroke-linecap="round"/>' +
-      "</svg>"
-    );
+    return window.TinyTapArt.get("balloon", color.fill);
   }
 
   function pickTarget() {
@@ -104,9 +93,7 @@
         "pop-the-" + target.name + (targetCount === 1 ? "-balloon" : "-balloons")
       );
     }
-    sampleEl.style.setProperty("--pill", target.fill);
-    sampleEl.style.setProperty("--pill-ink", target.ink);
-    sampleEl.replaceChildren();
+    sampleEl.innerHTML = balloonSvg(target);
     playfield.dataset.target = target.id;
 
     const slots = shuffle(SLOTS).slice(0, pack.length);
@@ -144,6 +131,9 @@
     if (window.TinyTapVoice) {
       window.TinyTapVoice.sfx("pop");
     }
+    if (window.TinyTapFx) {
+      window.TinyTapFx.good(balloon);
+    }
     round.remaining -= 1;
 
     if (round.remaining <= 0) {
@@ -168,6 +158,9 @@
     }, 240);
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
+      if (window.TinyTapFx) {
+        window.TinyTapFx.win(playfield);
+      }
     }, 420);
   }
 

@@ -1,17 +1,16 @@
 (function () {
-  const STROKE = "#2c2118";
-  const CREAM = "#fffaf3";
-  const INK = "#2c2118";
+  const ART = window.TinyTapArt;
+  const C = ART.colors;
 
   const LETTERS = [
-    { id: "a", glyph: "A", word: "apple", fill: "#e25b3a", ink: CREAM },
-    { id: "b", glyph: "B", word: "balloon", fill: "#3b7ddd", ink: CREAM },
-    { id: "c", glyph: "C", word: "cat", fill: "#1f9a8a", ink: CREAM },
-    { id: "d", glyph: "D", word: "duck", fill: "#e8b931", ink: INK },
-    { id: "f", glyph: "F", word: "fish", fill: "#3d9a4a", ink: CREAM },
-    { id: "o", glyph: "O", word: "owl", fill: "#8b5cd6", ink: CREAM },
-    { id: "r", glyph: "R", word: "rabbit", fill: "#c48a3a", ink: CREAM },
-    { id: "s", glyph: "S", word: "star", fill: "#e07a3a", ink: CREAM },
+    { id: "a", glyph: "A", word: "apple", fill: C.red },
+    { id: "b", glyph: "B", word: "balloon", fill: C.blue },
+    { id: "c", glyph: "C", word: "cat", fill: C.teal },
+    { id: "d", glyph: "D", word: "duck", fill: C.yellow, ink: ART.INK },
+    { id: "f", glyph: "F", word: "fish", fill: C.green },
+    { id: "o", glyph: "O", word: "owl", fill: C.purple },
+    { id: "r", glyph: "R", word: "rabbit", fill: C.brown },
+    { id: "s", glyph: "S", word: "star", fill: C.orange },
   ];
 
   const playfield = document.getElementById("playfield");
@@ -38,20 +37,7 @@
   }
 
   function letterArt(letter) {
-    return (
-      '<svg class="art letter-tile" viewBox="0 0 100 100" aria-hidden="true">' +
-      '<rect x="8" y="8" width="84" height="84" rx="18" fill="' +
-      letter.fill +
-      '" stroke="' +
-      STROKE +
-      '" stroke-width="3"/>' +
-      '<text x="50" y="68" text-anchor="middle" font-size="52" font-weight="800" fill="' +
-      letter.ink +
-      '">' +
-      letter.glyph +
-      "</text>" +
-      "</svg>"
-    );
+    return ART.get("letter", letter.glyph, letter.fill, letter.ink);
   }
 
   function pickTarget() {
@@ -85,9 +71,7 @@
     celebrateEl.classList.remove("show");
     clearItems();
     promptEl.textContent = "Tap " + target.glyph;
-    sampleEl.textContent = target.glyph;
-    sampleEl.style.background = target.fill;
-    sampleEl.style.color = target.ink;
+    sampleEl.innerHTML = letterArt(target);
     playfield.dataset.target = target.id;
     playfield.dataset.count = "4";
     if (window.TinyTapVoice) {
@@ -121,6 +105,9 @@
     }
 
     item.classList.add("found");
+    if (window.TinyTapFx) {
+      window.TinyTapFx.good(item);
+    }
     finishRound();
   }
 
@@ -135,6 +122,9 @@
     }
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
+      if (window.TinyTapFx) {
+        window.TinyTapFx.win(playfield);
+      }
     }, 280);
   }
 

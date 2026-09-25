@@ -93,9 +93,18 @@
     say: function (id) {
       current = id;
       play(id);
+      var tag = document.querySelector(".prompt");
+      if (tag) {
+        tag.classList.remove("say");
+        void tag.offsetWidth;
+        tag.classList.add("say");
+      }
     },
     word: function (id) {
       play(id);
+    },
+    muted: function () {
+      return muted;
     },
     replay: function () {
       if (current) {
@@ -117,7 +126,7 @@
     },
     ready: function () {
       syncButtons();
-      var prompt = document.getElementById("prompt");
+      var prompt = document.querySelector(".prompt") || document.getElementById("prompt");
       if (prompt) {
         prompt.title = "Hear it again";
         prompt.addEventListener("click", function () {

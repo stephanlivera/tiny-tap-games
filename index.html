@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#e25b3a" />
+    <meta name="theme-color" content="#fdf3e1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Tiny Tap" />
@@ -17,52 +17,54 @@
     <title>Tiny Tap Games</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="manifest.json" />
+    <link rel="preload" href="assets/fonts/fredoka-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body class="home">
-    <main class="page">
-      <header class="home-head">
-        <p class="kicker">For little hands</p>
-        <h1 class="site-title">Tiny Tap Games</h1>
-        <p class="lede">
-          Short, quiet games for young kids.
-        </p>
-      </header>
+    <main class="home-page">
+      <div class="bunting" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
-      <section class="shelf" aria-label="Games">
-        <div class="game-grid">
-          <a class="game-card playable" href="games/count/" aria-label="Count the Things">
-            <img class="card-photo" src="assets/home/count.webp" alt="" width="840" height="630" />
-            <h2>Count</h2>
-          </a>
+      <h1 class="site-title"><span>Tiny</span> <span>Tap</span> <span>Games</span></h1>
 
-          <a class="game-card playable" href="games/balloon/" aria-label="Balloon Pop">
-            <img class="card-photo" src="assets/home/balloon.webp" alt="" width="840" height="630" />
-            <h2>Balloons</h2>
-          </a>
+      <nav class="game-grid" aria-label="Games">
+        <a class="game-card" href="games/count/" aria-label="Count the Things">
+          <span class="card-art" data-art="apple"></span>
+          <span class="card-name">Count</span>
+        </a>
+        <a class="game-card" href="games/balloon/" aria-label="Balloon Pop">
+          <span class="card-art" data-art="balloon" data-color="red"></span>
+          <span class="card-name">Balloons</span>
+        </a>
+        <a class="game-card" href="games/shapes/" aria-label="Shape Hunt">
+          <span class="card-art" data-art="shapesTrio"></span>
+          <span class="card-name">Shapes</span>
+        </a>
+        <a class="game-card" href="games/peekaboo/" aria-label="Peekaboo Doors">
+          <span class="card-art" data-art="house"></span>
+          <span class="card-name">Peekaboo</span>
+        </a>
+        <a class="game-card" href="games/match/" aria-label="Match the Pairs">
+          <span class="card-art" data-art="pairs"></span>
+          <span class="card-name">Pairs</span>
+        </a>
+        <a class="game-card" href="games/letters/" aria-label="Letter Hunt">
+          <span class="card-art" data-art="letter" data-glyph="A" data-color="blue"></span>
+          <span class="card-name">Letters</span>
+        </a>
+      </nav>
 
-          <a class="game-card playable" href="games/shapes/" aria-label="Shape Hunt">
-            <img class="card-photo" src="assets/home/shapes.webp" alt="" width="840" height="630" />
-            <h2>Shapes</h2>
-          </a>
-
-          <a class="game-card playable" href="games/peekaboo/" aria-label="Peekaboo Doors">
-            <img class="card-photo" src="assets/home/peekaboo.webp" alt="" width="840" height="630" />
-            <h2>Peekaboo</h2>
-          </a>
-
-          <a class="game-card playable" href="games/match/" aria-label="Match the Pairs">
-            <img class="card-photo match-photo" src="assets/home/match.webp" alt="" width="960" height="720" />
-            <h2>Pairs</h2>
-          </a>
-
-          <a class="game-card playable" href="games/letters/" aria-label="Letter Hunt">
-            <img class="card-photo letters-photo" src="assets/home/letters.webp" alt="" width="400" height="300" />
-            <h2>Letters</h2>
-          </a>
-        </div>
-      </section>
+      <p class="home-note">No ads, no accounts, no tracking. Just tap and play.</p>
     </main>
     <script src="js/tablet.js"></script>
+    <script src="js/art.js"></script>
+    <script>
+      document.querySelectorAll(".card-art").forEach(function (slot) {
+        var art = window.TinyTapArt;
+        var color = art.colors[slot.dataset.color];
+        slot.innerHTML = slot.dataset.glyph
+          ? art.get(slot.dataset.art, slot.dataset.glyph, color)
+          : art.get(slot.dataset.art, color);
+      });
+    </script>
   </body>
 </html>
