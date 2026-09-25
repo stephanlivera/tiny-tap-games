@@ -20,12 +20,12 @@ On a tablet on the same network, use the computer's LAN address instead of `loca
 
 | Game | Status | What it teaches |
 | --- | --- | --- |
-| Count the Things | Playable | Numbers 1–5 and English number words |
+| Count the Things | Playable | Numbers 1–10 and English number words |
 | Balloon Pop | Playable | Colours (red, blue, yellow, green, purple) |
-| Shape Hunt | Playable | Circle, square, triangle, star |
+| Shape Hunt | Playable | Circle, square, triangle, star, heart, oval, rectangle, diamond |
 | Peekaboo Doors | Playable | Animal words; cause-and-effect tapping |
 | Match the Pairs | Playable | Matching animals and a star |
-| Letter Hunt | Playable | Letter names A, B, C, D, F, O, R, S |
+| Letter Hunt | Playable | All 26 letter names, each with a word |
 
 Count the Things: tap each object once. The tally grows, then the round shows the numeral and the English word (`three`, `four`, …).
 
@@ -41,7 +41,40 @@ Right answers sparkle with a soft chime. Each finished round drops paper confett
 
 Match the Pairs: flip two cards. Matching pairs stay up. Mismatches flip back. When every pair is found, celebrate and tap Next for a new shuffle.
 
-Letter Hunt: tap the named letter among four big blocks. The round then says the letter and a word (`A is for apple`).
+Letter Hunt: tap the named letter among the big blocks. The round then says the letter and a word (`A is for apple`).
+
+## Levels
+
+Every game starts easy. Each time the row of five stars fills, the game moves up a level for the rest of that visit, and the stars change colour (gold, then orange, then purple). A fresh visit starts at level 1 again, so a younger sibling never lands on the hard version.
+
+| Game | Level 1 | Level 2 | Level 3 |
+| --- | --- | --- | --- |
+| Count | 1–5 things | 3–7 | 5–10 |
+| Balloons | 5 balloons, pop 1–2 | 6, pop 2–3 | 7, pop 2–3 |
+| Shapes | 4 basic shapes | adds heart and oval, 5 on the board | adds rectangle and diamond, 6 on the board |
+| Peekaboo | 3 houses | 4 | 5 (4 on narrow phones) |
+| Pairs | 4 pairs | 5 | 6 |
+| Letters | 8 letters, 4 tiles | 16 letters | all 26, 6 tiles |
+
+## Helping little players
+
+- **Stuck?** After about 7 seconds with no tap, the game says the prompt again and the right answer wiggles. It tries three times, then goes quiet until the next tap.
+- **Stray taps:** in a game, the home button needs a press-and-hold (a ring fills up). A quick tap just wiggles it.
+- **Locking the iPad to one game:** turn on Guided Access (Settings → Accessibility → Guided Access), open a game, then triple-click the side or home button to start it.
+
+## Offline and home screen
+
+After the first visit, a service worker (`sw.js`) keeps a copy of the whole site, so the games work with no connection. Add it to the home screen (Share → Add to Home Screen on iPad) for a full-screen app with its own icon.
+
+The service worker only runs over HTTPS (or on `localhost`). After adding, removing or changing site files, run:
+
+```bash
+python3 scripts/update-sw.py
+```
+
+It rewrites the file list and cache version in `sw.js`, so devices pick up the new copy.
+
+New voice clips: add lines to `scripts/voice.py` and run it. It only renders clips that are missing (`--force` redoes them all).
 
 ## Look and feel
 

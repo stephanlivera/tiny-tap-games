@@ -1,5 +1,12 @@
 (function () {
-  const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five"];
+  const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+
+  // How many things can appear in a round, by level.
+  const LEVELS = [
+    [1, 2, 3, 4, 5],
+    [3, 4, 5, 6, 7],
+    [5, 6, 7, 8, 9, 10],
+  ];
 
   const ART = window.TinyTapArt;
 
@@ -31,8 +38,12 @@
   let lastTotal = 0;
   let lastSetId = "";
 
+  function level() {
+    return window.TinyTapFx ? Math.min(window.TinyTapFx.level(), LEVELS.length) : 1;
+  }
+
   function pickTotal() {
-    const choices = [1, 2, 3, 4, 5].filter(function (n) {
+    const choices = LEVELS[level() - 1].filter(function (n) {
       return n !== lastTotal;
     });
     return choices[Math.floor(Math.random() * choices.length)];
@@ -140,6 +151,12 @@
       startRound();
     }
   });
+
+  if (window.TinyTapFx) {
+    window.TinyTapFx.hint(function () {
+      return Array.prototype.slice.call(playfield.querySelectorAll(".item:not(.counted)"), 0, 1);
+    });
+  }
 
   startRound();
 })();

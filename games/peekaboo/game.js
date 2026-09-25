@@ -11,6 +11,10 @@
     };
   });
 
+  // Houses on the street, by level. Narrow portrait phones stop at four.
+  const LEVELS = [3, 4, 5];
+  const NARROW = window.matchMedia("(max-width: 560px) and (orientation: portrait)");
+
   const doorsEl = document.getElementById("doors");
   const promptEl = document.getElementById("prompt");
   const sampleEl = document.getElementById("sample");
@@ -64,7 +68,9 @@
   }
 
   function startRound() {
-    round.animals = shuffle(ANIMALS).slice(0, 3);
+    const level = window.TinyTapFx ? Math.min(window.TinyTapFx.level(), LEVELS.length) : 1;
+    const houses = Math.min(LEVELS[level - 1], NARROW.matches ? 4 : 5);
+    round.animals = shuffle(ANIMALS).slice(0, houses);
     round.opened = 0;
     round.finished = false;
     celebrateEl.classList.remove("show");
@@ -74,6 +80,7 @@
       window.TinyTapVoice.say("tap-a-door");
     }
     doorsEl.replaceChildren();
+    doorsEl.dataset.count = String(houses);
 
     round.animals.forEach(function (animal) {
       const button = document.createElement("button");
@@ -149,6 +156,12 @@
       startRound();
     }
   });
+
+  if (window.TinyTapFx) {
+    window.TinyTapFx.hint(function () {
+      return Array.prototype.slice.call(doorsEl.querySelectorAll(".door:not(.open)"), 0, 1);
+    });
+  }
 
   startRound();
 })();

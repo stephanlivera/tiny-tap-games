@@ -136,6 +136,32 @@ button {
   height: 48%;
 }
 
+/* Home in a game needs a press-and-hold (js/tablet.js); a ring fills while holding. */
+.hold-btn {
+  position: relative;
+  -webkit-touch-callout: none;
+}
+
+.hold-btn::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: conic-gradient(var(--teal) calc(var(--hold, 0) * 1turn), transparent 0);
+  -webkit-mask: radial-gradient(circle, transparent calc(50% - 5px), #000 calc(50% - 4px));
+  mask: radial-gradient(circle, transparent calc(50% - 5px), #000 calc(50% - 4px));
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.hold-btn.holding::after {
+  opacity: 1;
+}
+
+.hold-btn.nudge {
+  animation: wobble 420ms ease;
+}
+
 .sound-btn .sound-slash {
   opacity: 0;
 }
@@ -648,6 +674,43 @@ body:has(.game-shell) {
     width: min(12.5rem, 36cqi, 30cqb);
     height: min(12.5rem, 36cqi, 30cqb);
   }
+
+  .playfield[data-count="6"] .item {
+    width: min(11.5rem, 30cqi, 30cqb);
+    height: min(11.5rem, 30cqi, 30cqb);
+  }
+
+  .playfield[data-count="7"] .item,
+  .playfield[data-count="8"] .item {
+    width: min(10rem, 30cqi, 26cqb);
+    height: min(10rem, 30cqi, 26cqb);
+  }
+
+  .playfield[data-count="9"] .item,
+  .playfield[data-count="10"] .item {
+    width: min(9rem, 30cqi, 21cqb);
+    height: min(9rem, 30cqi, 21cqb);
+  }
+}
+
+/* Wide boards: size the pieces so bigger rounds split into even rows (6 in one row, 4 + 4, 5 + 5). */
+@container (min-aspect-ratio: 13 / 10) {
+  .playfield[data-count="6"] .item {
+    width: min(11rem, 13.5cqi, 40cqb);
+    height: min(11rem, 13.5cqi, 40cqb);
+  }
+
+  .playfield[data-count="7"] .item,
+  .playfield[data-count="8"] .item {
+    width: min(12rem, 21cqi, 40cqb);
+    height: min(12rem, 21cqi, 40cqb);
+  }
+
+  .playfield[data-count="9"] .item,
+  .playfield[data-count="10"] .item {
+    width: min(11rem, 17cqi, 40cqb);
+    height: min(11rem, 17cqi, 40cqb);
+  }
 }
 
 .item .art {
@@ -739,6 +802,33 @@ body:has(.game-shell) {
 .match-grid > :nth-child(6) { animation-delay: 350ms; }
 .match-grid > :nth-child(7) { animation-delay: 420ms; }
 .match-grid > :nth-child(8) { animation-delay: 490ms; }
+.playfield > button:nth-of-type(6),
+.door-row > :nth-child(4) { animation-delay: 350ms; }
+.playfield > button:nth-of-type(7),
+.door-row > :nth-child(5) { animation-delay: 420ms; }
+.playfield > button:nth-of-type(8) { animation-delay: 490ms; }
+.playfield > button:nth-of-type(9),
+.match-grid > :nth-child(9) { animation-delay: 560ms; }
+.playfield > button:nth-of-type(10),
+.match-grid > :nth-child(10) { animation-delay: 630ms; }
+.match-grid > :nth-child(11) { animation-delay: 700ms; }
+.match-grid > :nth-child(12) { animation-delay: 770ms; }
+
+/* Idle hint: the right answer gives a little "over here" wiggle (js/fx.js). */
+.item.hint > .art,
+.balloon.hint > .art,
+.door.hint .doorway,
+.match-card.hint .match-back {
+  animation: hint 1.2s ease-in-out;
+}
+
+@keyframes hint {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.14) rotate(-7deg); }
+  40% { transform: scale(1.14) rotate(7deg); }
+  60% { transform: scale(1.1) rotate(-5deg); }
+  80% { transform: scale(1.05) rotate(3deg); }
+}
 
 /* ---------- Balloon Pop ---------- */
 
@@ -760,6 +850,11 @@ body:has(.game-shell) {
 @supports (width: 1cqi) {
   .balloon {
     width: min(10rem, 19cqi, 34cqb);
+  }
+
+  .playfield[data-count="6"] .balloon,
+  .playfield[data-count="7"] .balloon {
+    width: min(8.5rem, 14cqi, 32cqb);
   }
 }
 
@@ -796,11 +891,17 @@ body:has(.game-shell) {
 
 /* Narrow screens: let balloons flow in rows instead of fixed slots. */
 @media (max-width: 720px) and (orientation: portrait) {
-  .balloon {
+  .balloon,
+  .playfield[data-count] .balloon {
     position: relative;
     left: auto;
     top: auto;
     width: min(7.4rem, 27vw, 22vh);
+  }
+
+  .playfield[data-count="6"] .balloon,
+  .playfield[data-count="7"] .balloon {
+    width: min(6.6rem, 27vw, 19vh);
   }
 }
 
@@ -829,6 +930,7 @@ body:has(.game-shell) {
   flex: 0 0 auto;
   width: min(15rem, 30cqi, 60cqb);
   aspect-ratio: 4 / 5;
+  touch-action: manipulation;
   padding: 0;
   border: 0;
   background: transparent;
@@ -839,6 +941,16 @@ body:has(.game-shell) {
 
 .door:nth-child(2) { --wall: var(--pink); --roof: var(--blue); --paint: var(--purple); }
 .door:nth-child(3) { --wall: #9ed0e6; --roof: var(--green); --paint: var(--red); }
+.door:nth-child(4) { --wall: #c9e3a6; --roof: var(--purple); --paint: var(--blue); }
+.door:nth-child(5) { --wall: #f6cf8e; --roof: var(--teal); --paint: var(--orange); }
+
+.door-row[data-count="4"] .door {
+  width: min(13rem, 23cqi, 56cqb);
+}
+
+.door-row[data-count="5"] .door {
+  width: min(11.5rem, 18.5cqi, 50cqb);
+}
 
 .door:active {
   transform: scale(0.96);
@@ -956,9 +1068,9 @@ body:has(.game-shell) {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
   gap: clamp(0.5rem, 2.4cqi, 1.3rem);
-  width: min(100%, 46rem, 140cqb);
+  width: min(100%, calc(var(--cols, 4) * 11.5rem), calc(92cqb * var(--cols, 4) / var(--rows, 2)));
 }
 
 .match-card {
@@ -1024,12 +1136,6 @@ body:has(.game-shell) {
   animation: hop 460ms var(--spring);
 }
 
-@media (max-width: 560px) and (orientation: portrait) {
-  .match-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: min(100%, 22rem, 48cqb);
-  }
-}
 
 /* ---------- Round complete ---------- */
 
@@ -1188,6 +1294,9 @@ body:has(.game-shell) {
   background: var(--yellow);
   animation: star-in 600ms var(--spring);
 }
+
+.progress[data-level="2"] i.on { background: var(--orange); }
+.progress[data-level="3"] i.on { background: var(--purple); }
 
 .progress.full i {
   animation: dance 700ms var(--spring) infinite alternate;

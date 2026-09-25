@@ -12,7 +12,8 @@
     };
   });
 
-  const PAIR_COUNT = 4;
+  // Pairs on the table, by level.
+  const LEVELS = [4, 5, 6];
 
   const gridEl = document.getElementById("grid");
   const promptEl = document.getElementById("prompt");
@@ -23,6 +24,7 @@
   const nextBtn = document.getElementById("next");
   const playfield = document.getElementById("playfield");
 
+  let pairCount = LEVELS[0];
   let cards = [];
   let flipped = [];
   let matchedCount = 0;
@@ -52,8 +54,29 @@
     );
   }
 
+  // Pick the column count that gives the biggest cards for this screen.
+  function layout() {
+    const style = window.getComputedStyle(playfield);
+    const width = playfield.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    const height = playfield.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+    const total = pairCount * 2;
+    let best = { cols: 4, rows: 2, size: 0 };
+    for (let cols = 2; cols <= total; cols += 1) {
+      const rows = Math.ceil(total / cols);
+      if (cols * rows - total >= cols) {
+        continue;
+      }
+      const size = Math.min(width / cols, height / rows);
+      if (size > best.size) {
+        best = { cols: cols, rows: rows, size: size };
+      }
+    }
+    gridEl.style.setProperty("--cols", String(best.cols));
+    gridEl.style.setProperty("--rows", String(best.rows));
+  }
+
   function updatePrompt() {
-    const left = PAIR_COUNT - matchedCount;
+    const left = pairCount - matchedCount;
     if (left <= 0) {
       promptEl.textContent = "All matched!";
       return;
@@ -62,11 +85,13 @@
       promptEl.textContent = "Find the match";
       return;
     }
-    promptEl.textContent = left === PAIR_COUNT ? "Find the pairs" : "Keep going";
+    promptEl.textContent = left === pairCount ? "Find the pairs" : "Keep going";
   }
 
   function startRound() {
-    const chosen = shuffle(PAIRS).slice(0, PAIR_COUNT);
+    const level = window.TinyTapFx ? Math.min(window.TinyTapFx.level(), LEVELS.length) : 1;
+    pairCount = LEVELS[level - 1];
+    const chosen = shuffle(PAIRS).slice(0, pairCount);
     const deck = [];
     chosen.forEach(function (pair) {
       deck.push(pair);
@@ -78,8 +103,9 @@
     resolving = false;
     finished = false;
     celebrateEl.classList.remove("show");
-    playfield.dataset.count = String(PAIR_COUNT * 2);
+    playfield.dataset.count = String(pairCount * 2);
     gridEl.replaceChildren();
+    layout();
     updatePrompt();
     sampleEl.innerHTML = ART.get("pairs");
     if (window.TinyTapVoice) {
@@ -138,7 +164,7 @@
       if (window.TinyTapVoice) {
         window.TinyTapVoice.word(first.dataset.id);
       }
-      if (matchedCount >= PAIR_COUNT) {
+      if (matchedCount >= pairCount) {
         finishRound();
       }
       return;
@@ -192,6 +218,20 @@
       startRound();
     }
   });
+
+  window.addEventListener("resize", layout);
+
+  if (window.TinyTapFx) {
+    // With one card up, wiggle its partner; otherwise just say the prompt again.
+    window.TinyTapFx.hint(function () {
+      if (flipped.length !== 1) {
+        return [];
+      }
+      return Array.prototype.slice.call(
+        gridEl.querySelectorAll('.match-card[data-id="' + flipped[0].dataset.id + '"]:not(.flipped)')
+      );
+    });
+  }
 
   startRound();
 })();

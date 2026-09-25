@@ -2,16 +2,38 @@
   const ART = window.TinyTapArt;
   const C = ART.colors;
 
+  // Letters join the game at their level; by level 3 all 26 are in play.
   const LETTERS = [
-    { id: "a", glyph: "A", word: "apple", fill: C.red },
-    { id: "b", glyph: "B", word: "balloon", fill: C.blue },
-    { id: "c", glyph: "C", word: "cat", fill: C.teal },
-    { id: "d", glyph: "D", word: "duck", fill: C.yellow, ink: ART.INK },
-    { id: "f", glyph: "F", word: "fish", fill: C.green },
-    { id: "o", glyph: "O", word: "owl", fill: C.purple },
-    { id: "r", glyph: "R", word: "rabbit", fill: C.brown },
-    { id: "s", glyph: "S", word: "star", fill: C.orange },
+    { id: "a", glyph: "A", word: "apple", fill: C.red, level: 1 },
+    { id: "b", glyph: "B", word: "balloon", fill: C.blue, level: 1 },
+    { id: "c", glyph: "C", word: "cat", fill: C.teal, level: 1 },
+    { id: "d", glyph: "D", word: "duck", fill: C.yellow, ink: ART.INK, level: 1 },
+    { id: "f", glyph: "F", word: "fish", fill: C.green, level: 1 },
+    { id: "o", glyph: "O", word: "owl", fill: C.purple, level: 1 },
+    { id: "r", glyph: "R", word: "rabbit", fill: C.brown, level: 1 },
+    { id: "s", glyph: "S", word: "star", fill: C.orange, level: 1 },
+    { id: "e", glyph: "E", word: "egg", fill: C.teal, level: 2 },
+    { id: "g", glyph: "G", word: "goat", fill: C.green, level: 2 },
+    { id: "h", glyph: "H", word: "hat", fill: C.red, level: 2 },
+    { id: "m", glyph: "M", word: "moon", fill: C.purple, level: 2 },
+    { id: "n", glyph: "N", word: "nest", fill: C.brown, level: 2 },
+    { id: "p", glyph: "P", word: "pig", fill: C.pink, ink: ART.INK, level: 2 },
+    { id: "t", glyph: "T", word: "tree", fill: C.blue, level: 2 },
+    { id: "u", glyph: "U", word: "umbrella", fill: C.orange, level: 2 },
+    { id: "i", glyph: "I", word: "igloo", fill: C.blue, level: 3 },
+    { id: "j", glyph: "J", word: "jam", fill: C.red, level: 3 },
+    { id: "k", glyph: "K", word: "kite", fill: C.yellow, ink: ART.INK, level: 3 },
+    { id: "l", glyph: "L", word: "lion", fill: C.orange, level: 3 },
+    { id: "q", glyph: "Q", word: "queen", fill: C.purple, level: 3 },
+    { id: "v", glyph: "V", word: "van", fill: C.teal, level: 3 },
+    { id: "w", glyph: "W", word: "whale", fill: C.blue, level: 3 },
+    { id: "x", glyph: "X", word: "x-ray", fill: C.green, level: 3 },
+    { id: "y", glyph: "Y", word: "yo-yo", fill: C.red, level: 3 },
+    { id: "z", glyph: "Z", word: "zebra", fill: C.brown, level: 3 },
   ];
+
+  // How many tiles are on the board, by level.
+  const BOARD = [4, 4, 6];
 
   const playfield = document.getElementById("playfield");
   const promptEl = document.getElementById("prompt");
@@ -40,8 +62,19 @@
     return ART.get("letter", letter.glyph, letter.fill, letter.ink);
   }
 
+  function level() {
+    return window.TinyTapFx ? Math.min(window.TinyTapFx.level(), BOARD.length) : 1;
+  }
+
+  function pool() {
+    const current = level();
+    return LETTERS.filter(function (letter) {
+      return letter.level <= current;
+    });
+  }
+
   function pickTarget() {
-    const choices = LETTERS.filter(function (letter) {
+    const choices = pool().filter(function (letter) {
       return letter.id !== lastId;
     });
     return choices[Math.floor(Math.random() * choices.length)];
@@ -49,10 +82,10 @@
 
   function pickBoard(target) {
     const others = shuffle(
-      LETTERS.filter(function (letter) {
+      pool().filter(function (letter) {
         return letter.id !== target.id;
       })
-    ).slice(0, 3);
+    ).slice(0, BOARD[level() - 1] - 1);
     return shuffle(others.concat([target]));
   }
 
@@ -73,12 +106,13 @@
     promptEl.textContent = "Tap " + target.glyph;
     sampleEl.innerHTML = letterArt(target);
     playfield.dataset.target = target.id;
-    playfield.dataset.count = "4";
     if (window.TinyTapVoice) {
       window.TinyTapVoice.say("tap-" + target.id);
     }
 
-    pickBoard(target).forEach(function (letter) {
+    const board = pickBoard(target);
+    playfield.dataset.count = String(board.length);
+    board.forEach(function (letter) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "item";
@@ -118,7 +152,7 @@
     doneWord.textContent = target.glyph;
     doneCaption.textContent = target.glyph + " is for " + target.word;
     if (window.TinyTapVoice) {
-      window.TinyTapVoice.word(target.id + "-for-" + target.word);
+      window.TinyTapVoice.word(target.id + "-for-" + target.word.replace(/-/g, ""));
     }
     window.setTimeout(function () {
       celebrateEl.classList.add("show");
@@ -138,6 +172,14 @@
       startRound();
     }
   });
+
+  if (window.TinyTapFx) {
+    window.TinyTapFx.hint(function () {
+      return Array.prototype.slice.call(
+        playfield.querySelectorAll('.item[data-letter="' + round.target.id + '"]')
+      );
+    });
+  }
 
   startRound();
 })();

@@ -2,6 +2,14 @@
   var COLORS = ["#e2513a", "#f2b632", "#2f9e97", "#3a78c9", "#8d62c9", "#5aa66a"];
   var STARS = 5;
   var won = 0;
+  // Each full row of stars moves the game up one level for the rest of the visit.
+  var rows = 0;
+  var HINT_FIRST = 7000;
+  var HINT_AGAIN = 12000;
+  var HINT_MAX = 3;
+  var hintTargets = null;
+  var hintsGiven = 0;
+  var lastActivity = Date.now();
   var reduced = false;
   var audio = null;
 
@@ -136,6 +144,7 @@
       row = document.createElement("div");
       row.className = "progress";
       row.setAttribute("aria-hidden", "true");
+      row.dataset.level = "1";
       for (var i = 0; i < STARS; i += 1) {
         row.appendChild(document.createElement("i"));
       }
@@ -144,24 +153,81 @@
     return row;
   }
 
+  // Empty the row, ready for the next level's colour.
+  function resetRow(row) {
+    won = 0;
+    row.dataset.level = String(Math.min(rows + 1, 3));
+    row.classList.remove("full");
+    row.querySelectorAll("i").forEach(function (star) {
+      star.classList.remove("on");
+    });
+  }
+
   function addStar() {
     var row = progressRow();
     if (!row) {
       return;
     }
     if (won >= STARS) {
-      won = 0;
-      row.classList.remove("full");
-      row.querySelectorAll("i").forEach(function (star) {
-        star.classList.remove("on");
-      });
+      resetRow(row);
     }
     won += 1;
     row.children[won - 1].classList.add("on");
     if (won >= STARS) {
+      rows += 1;
       row.classList.add("full");
     }
   }
+
+  function bump(el, className) {
+    if (!el) {
+      return;
+    }
+    className = className || "bump";
+    el.classList.remove(className);
+    void el.offsetWidth;
+    el.classList.add(className);
+  }
+
+  // After a quiet spell, say the prompt again and wiggle the right answer.
+  // Stops after a few tries so a tablet left on the couch goes quiet.
+  function checkIdle() {
+    var celebrating = !!document.querySelector(".celebrate.show");
+    if (won >= STARS && !celebrating) {
+      resetRow(progressRow());
+    }
+    if (!hintTargets || document.hidden) {
+      return;
+    }
+    if (celebrating) {
+      lastActivity = Date.now();
+      return;
+    }
+    if (hintsGiven >= HINT_MAX || Date.now() - lastActivity < (hintsGiven ? HINT_AGAIN : HINT_FIRST)) {
+      return;
+    }
+    lastActivity = Date.now();
+    hintsGiven += 1;
+    if (root.TinyTapVoice) {
+      root.TinyTapVoice.replay();
+    }
+    (hintTargets() || []).forEach(function (el) {
+      bump(el, "hint");
+      root.setTimeout(function () {
+        el.classList.remove("hint");
+      }, 1400);
+    });
+  }
+
+  document.addEventListener(
+    "pointerdown",
+    function () {
+      lastActivity = Date.now();
+      hintsGiven = 0;
+    },
+    true
+  );
+  root.setInterval(checkIdle, 1000);
 
   progressRow();
 
@@ -178,14 +244,16 @@
       tones(won >= STARS ? [523, 659, 784, 1047, 1319, 1568] : [523, 659, 784, 1047], 0.11);
     },
     // Restart a one-shot CSS animation class on an element.
-    bump: function (el, className) {
-      if (!el) {
-        return;
-      }
-      className = className || "bump";
-      el.classList.remove(className);
-      void el.offsetWidth;
-      el.classList.add(className);
+    bump: bump,
+    // Current level: 1, then one higher for each full row of stars.
+    // Games clamp it to the number of levels they have.
+    level: function () {
+      return rows + 1;
+    },
+    // Register a function that returns the pieces to wiggle when a child is stuck.
+    hint: function (targets) {
+      hintTargets = targets;
+      lastActivity = Date.now();
     },
   };
 })(window);

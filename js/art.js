@@ -215,6 +215,38 @@
       return ART.star(fill);
     },
 
+    heart: function (fill) {
+      return wrap(
+        '<path d="M50 84 C30 70 12 56 12 38 C12 25 22 16 33 16 C41 16 47 21 50 28 C53 21 59 16 67 16 C78 16 88 25 88 38 C88 56 70 70 50 84Z" fill="' + fill + '"/>' +
+        '<path d="M50 28 C53 21 59 16 67 16 C78 16 88 25 88 38 C88 56 70 70 50 84Z" fill="' + SHADE + '"/>' +
+        '<path d="M22 36 C22 29 27 24 33 24" fill="none" stroke="' + SHINE + '" stroke-width="5" stroke-linecap="round"/>'
+      );
+    },
+
+    oval: function (fill) {
+      return wrap(
+        '<path d="M50 26 C74 26 90 37 90 50 C90 63 74 74 50 74 C26 74 10 63 10 50 C10 37 26 26 50 26Z" fill="' + fill + '"/>' +
+        '<path d="M74 30 C84 35 90 42 90 50 C90 63 74 74 50 74 C68 67 78 58 78 47 C78 41 77 35 74 30Z" fill="' + SHADE + '"/>' +
+        '<path d="M22 44 C25 38 32 34 40 32" fill="none" stroke="' + SHINE + '" stroke-width="5" stroke-linecap="round"/>'
+      );
+    },
+
+    rectangle: function (fill) {
+      return wrap(
+        '<path d="M16 30 L84 29 C89 29 92 32 92 37 L92 63 C92 68 89 71 84 71 L16 72 C11 72 8 69 8 64 L8 38 C8 33 11 30 16 30Z" fill="' + fill + '"/>' +
+        '<path d="M92 50 L92 63 C92 68 89 71 84 71 L16 72 C11 72 8 69 8 64 L8 62 C36 66 66 63 92 50Z" fill="' + SHADE + '"/>' +
+        '<path d="M17 46 L17 39 L26 39" fill="none" stroke="' + SHINE + '" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
+      );
+    },
+
+    diamond: function (fill) {
+      return wrap(
+        '<path d="M50 10 L84 50 L50 90 L16 50Z" fill="' + fill + '" stroke="' + fill + '" stroke-width="7" stroke-linejoin="round"/>' +
+        '<path d="M50 10 L84 50 L50 90Z" fill="' + SHADE + '" stroke="none"/>' +
+        '<path d="M33 44 L42 33" fill="none" stroke="' + SHINE + '" stroke-width="5" stroke-linecap="round"/>'
+      );
+    },
+
     letter: function (glyph, fill, ink) {
       return wrap(
         '<path d="M22 10 L78 11 C86 11 90 15 90 23 L89 78 C89 86 85 90 77 90 L22 89 C14 89 10 85 10 77 L11 22 C11 14 14 10 22 10Z" fill="' + fill + '"/>' +

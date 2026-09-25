@@ -4,12 +4,20 @@
   // Every shape in a round shares one colour, so colour never gives the answer away.
   const ROUND_COLORS = ["blue", "red", "green", "purple", "teal", "orange"];
 
+  // Shapes join the game at their level.
   const SHAPES = [
-    { id: "circle", name: "circle", art: "circle" },
-    { id: "square", name: "square", art: "square" },
-    { id: "triangle", name: "triangle", art: "triangle" },
-    { id: "star", name: "star", art: "shapeStar" },
+    { id: "circle", name: "circle", art: "circle", level: 1 },
+    { id: "square", name: "square", art: "square", level: 1 },
+    { id: "triangle", name: "triangle", art: "triangle", level: 1 },
+    { id: "star", name: "star", art: "shapeStar", level: 1 },
+    { id: "heart", name: "heart", art: "heart", level: 2 },
+    { id: "oval", name: "oval", art: "oval", level: 2 },
+    { id: "rectangle", name: "rectangle", art: "rectangle", level: 3 },
+    { id: "diamond", name: "diamond", art: "diamond", level: 3 },
   ];
+
+  // How many shapes are on the board, by level.
+  const BOARD = [4, 5, 6];
 
   const playfield = document.getElementById("playfield");
   const promptEl = document.getElementById("prompt");
@@ -38,8 +46,19 @@
     return ART.get(shape.art, round.fill);
   }
 
+  function level() {
+    return window.TinyTapFx ? Math.min(window.TinyTapFx.level(), BOARD.length) : 1;
+  }
+
+  function pool() {
+    const current = level();
+    return SHAPES.filter(function (shape) {
+      return shape.level <= current;
+    });
+  }
+
   function pickTarget() {
-    const choices = SHAPES.filter(function (shape) {
+    const choices = pool().filter(function (shape) {
       return shape.id !== lastId;
     });
     return choices[Math.floor(Math.random() * choices.length)];
@@ -66,9 +85,15 @@
     }
     sampleEl.innerHTML = shapeArt(target);
     playfield.dataset.target = target.id;
-    playfield.dataset.count = "4";
+    const others = shuffle(
+      pool().filter(function (shape) {
+        return shape.id !== target.id;
+      })
+    ).slice(0, BOARD[level() - 1] - 1);
+    const board = shuffle(others.concat([target]));
+    playfield.dataset.count = String(board.length);
 
-    shuffle(SHAPES).forEach(function (shape) {
+    board.forEach(function (shape) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "item";
@@ -128,6 +153,14 @@
       startRound();
     }
   });
+
+  if (window.TinyTapFx) {
+    window.TinyTapFx.hint(function () {
+      return Array.prototype.slice.call(
+        playfield.querySelectorAll('.item[data-shape="' + round.target.id + '"]')
+      );
+    });
+  }
 
   startRound();
 })();

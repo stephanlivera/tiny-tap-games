@@ -15,6 +15,24 @@
     { x: "78%", y: "31%" },
   ];
 
+  // Two staggered rows for the busier levels.
+  const SLOTS_WIDE = [
+    { x: "3%", y: "34%" },
+    { x: "16%", y: "12%" },
+    { x: "30%", y: "37%" },
+    { x: "44%", y: "13%" },
+    { x: "58%", y: "35%" },
+    { x: "71%", y: "12%" },
+    { x: "84%", y: "33%" },
+  ];
+
+  // Balloons on screen, and how many of them to pop, by level.
+  const LEVELS = [
+    { balloons: 5, targets: [1, 1, 2] },
+    { balloons: 6, targets: [2, 3] },
+    { balloons: 7, targets: [2, 3, 3] },
+  ];
+
   const playfield = document.getElementById("playfield");
   const promptColor = document.getElementById("prompt-color");
   const promptEl = document.getElementById("prompt");
@@ -48,6 +66,10 @@
     return window.TinyTapArt.get("balloon", color.fill);
   }
 
+  function level() {
+    return window.TinyTapFx ? Math.min(window.TinyTapFx.level(), LEVELS.length) : 1;
+  }
+
   function pickTarget() {
     const choices = COLORS.filter(function (color) {
       return color.id !== lastColorId;
@@ -68,13 +90,14 @@
         return color.id !== target.id;
       })
     );
-    const targetCount = Math.random() < 0.42 ? 2 : 1;
+    const setup = LEVELS[level() - 1];
+    const targetCount = setup.targets[Math.floor(Math.random() * setup.targets.length)];
     const pack = [];
     for (let i = 0; i < targetCount; i += 1) {
       pack.push(target);
     }
-    while (pack.length < 5) {
-      pack.push(others[pack.length - targetCount]);
+    while (pack.length < setup.balloons) {
+      pack.push(others[(pack.length - targetCount) % others.length]);
     }
 
     round.target = target;
@@ -95,8 +118,9 @@
     }
     sampleEl.innerHTML = balloonSvg(target);
     playfield.dataset.target = target.id;
+    playfield.dataset.count = String(pack.length);
 
-    const slots = shuffle(SLOTS).slice(0, pack.length);
+    const slots = shuffle(pack.length > SLOTS.length ? SLOTS_WIDE : SLOTS).slice(0, pack.length);
     shuffle(pack).forEach(function (color, index) {
       const button = document.createElement("button");
       button.type = "button";
@@ -174,6 +198,16 @@
       startRound();
     }
   });
+
+  if (window.TinyTapFx) {
+    window.TinyTapFx.hint(function () {
+      return Array.prototype.slice.call(
+        playfield.querySelectorAll('.balloon[data-color="' + round.target.id + '"]:not(.burst)'),
+        0,
+        1
+      );
+    });
+  }
 
   startRound();
 })();
