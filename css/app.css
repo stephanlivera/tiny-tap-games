@@ -316,8 +316,7 @@ body.home {
 }
 
 .card-art {
-  display: grid;
-  place-items: center;
+  position: relative;
   width: min(62%, 11rem);
   aspect-ratio: 1;
   border-radius: 50%;
@@ -326,6 +325,11 @@ body.home {
 }
 
 .card-art .art {
+  /* Absolute so the percentages resolve against the circle itself; as a grid
+     item they collapse to zero in Safari when the circle's width comes from
+     aspect-ratio. */
+  position: absolute;
+  inset: 13%;
   width: 74%;
   height: 74%;
   filter: var(--lift);
