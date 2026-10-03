@@ -79,7 +79,7 @@ body::after {
   pointer-events: none;
   opacity: 0.32;
   mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.3 0 0 0 0.22 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("../assets/paper.svg");
 }
 
 img,
@@ -550,6 +550,22 @@ body:has(.game-shell) {
   height: 34%;
 }
 
+.scene .cloud-shadow {
+  filter: drop-shadow(0 3px 0 rgba(45, 63, 69, 0.1));
+}
+
+.scene .hill-shadow {
+  filter: drop-shadow(0 -3px 0 rgba(45, 63, 69, 0.1));
+}
+
+.scene-sky .ground {
+  height: 24%;
+}
+
+.scene-meadow .ground {
+  height: 36%;
+}
+
 .scene .sun {
   position: absolute;
   top: calc(var(--bar) + 0.6rem);
@@ -608,7 +624,7 @@ body:has(.game-shell) {
 }
 
 .scene-street .ground {
-  height: 20%;
+  height: 22%;
 }
 
 /* ---------- Tap pieces ---------- */
