@@ -1138,6 +1138,9 @@ body:has(.game-shell) {
   inset: 0;
   z-index: 3;
   display: none;
+  /* One cell exactly the size of the free space, so a card scaled down by
+     js/fx.js stays centred in it rather than hanging off the bottom. */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   place-items: center;
   padding: calc(var(--bar) + var(--safe-top)) 1rem calc(2.6rem + var(--safe-bottom));
   background: rgba(253, 243, 225, 0.6);
@@ -1216,6 +1219,19 @@ body:has(.game-shell) {
 .done-art .art:nth-child(2) { animation-delay: 300ms; }
 .done-art .art:nth-child(3) { animation-delay: 400ms; }
 .done-art .art:nth-child(4) { animation-delay: 500ms; }
+
+.done-art.rows {
+  --cell: clamp(2.6rem, 10vh, 4.6rem);
+  flex-wrap: wrap;
+  align-content: center;
+  width: min(100%, var(--cols) * var(--cell) + (var(--cols) - 1) * 0.2rem);
+  height: auto;
+}
+
+.done-art.rows .art {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * 0.2rem) / var(--cols));
+  height: auto;
+}
 
 .done-art.balloon-art .art {
   aspect-ratio: 2 / 3;
@@ -1368,6 +1384,40 @@ body:has(.game-shell) {
   0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
   85% { opacity: 1; }
   100% { transform: translate(var(--dx), var(--fall)) rotate(var(--spin)); opacity: 0; }
+}
+
+/* ---------- Narrow screens (phones held upright) ---------- */
+
+/* Tighter top bar so the prompt words fit between the buttons. The whole
+   prompt still replays on tap, so its speaker icon can go. */
+@media (max-width: 430px) {
+  :root {
+    --btn: 2.9rem;
+  }
+
+  .topbar {
+    gap: 0.4rem;
+    padding-left: calc(0.5rem + var(--safe-left));
+    padding-right: calc(0.5rem + var(--safe-right));
+  }
+
+  .prompt {
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem 0.3rem 0.3rem;
+  }
+
+  .chip {
+    width: calc(var(--btn) * 0.8);
+    height: calc(var(--btn) * 0.8);
+  }
+
+  .prompt h1 {
+    font-size: 1.05rem;
+  }
+
+  .replay {
+    display: none;
+  }
 }
 
 /* ---------- Short screens (phones held sideways) ---------- */

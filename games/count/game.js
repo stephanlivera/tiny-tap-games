@@ -130,6 +130,9 @@
     doneWord.textContent = NUMBER_WORDS[round.total];
     doneCaption.textContent = round.total + " " + noun(round.set, round.total);
     doneArt.innerHTML = round.set.art().repeat(round.total);
+    // More than five things go in two even rows so each one stays big enough to count.
+    doneArt.classList.toggle("rows", round.total > 5);
+    doneArt.style.setProperty("--cols", String(Math.ceil(round.total / 2)));
     if (window.TinyTapVoice) {
       window.TinyTapVoice.word(NUMBER_WORDS[round.total]);
     }
