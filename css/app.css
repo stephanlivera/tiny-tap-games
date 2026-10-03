@@ -136,32 +136,6 @@ button {
   height: 48%;
 }
 
-/* Home in a game needs a press-and-hold (js/tablet.js); a ring fills while holding. */
-.hold-btn {
-  position: relative;
-  -webkit-touch-callout: none;
-}
-
-.hold-btn::after {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: conic-gradient(var(--teal) calc(var(--hold, 0) * 1turn), transparent 0);
-  -webkit-mask: radial-gradient(circle, transparent calc(50% - 5px), #000 calc(50% - 4px));
-  mask: radial-gradient(circle, transparent calc(50% - 5px), #000 calc(50% - 4px));
-  opacity: 0;
-  transition: opacity 120ms ease;
-}
-
-.hold-btn.holding::after {
-  opacity: 1;
-}
-
-.hold-btn.nudge {
-  animation: wobble 420ms ease;
-}
-
 .sound-btn .sound-slash {
   opacity: 0;
 }

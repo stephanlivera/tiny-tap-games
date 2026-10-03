@@ -59,7 +59,6 @@ Every game starts easy. Each time the row of five stars fills, the game moves up
 ## Helping little players
 
 - **Stuck?** After about 7 seconds with no tap, the game says the prompt again and the right answer wiggles. It tries three times, then goes quiet until the next tap.
-- **Stray taps:** in a game, the home button needs a press-and-hold (a ring fills up). A quick tap just wiggles it.
 - **Locking the iPad to one game:** turn on Guided Access (Settings → Accessibility → Guided Access), open a game, then triple-click the side or home button to start it.
 
 ## Offline and home screen
