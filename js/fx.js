@@ -231,6 +231,37 @@
 
   progressRow();
 
+  // Shrink the round-complete card to fit whatever space the screen has left
+  // (small phones, phones held sideways), instead of clipping or scrolling it.
+  function fitCelebrate() {
+    var overlays = document.querySelectorAll(".celebrate.show");
+    for (var i = 0; i < overlays.length; i += 1) {
+      var card = overlays[i].querySelector(".celebrate-card");
+      if (!card) {
+        continue;
+      }
+      var style = root.getComputedStyle(overlays[i]);
+      var roomX = overlays[i].clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      var roomY = overlays[i].clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      // offsetWidth/offsetHeight ignore the scale, so this measures the card's natural size.
+      var fit = Math.min(1, roomX / card.offsetWidth, roomY / card.offsetHeight);
+      card.style.scale = fit < 1 ? String(Math.max(fit, 0.3)) : "";
+    }
+  }
+
+  var celebrations = document.querySelectorAll(".celebrate");
+  if (celebrations.length && root.MutationObserver) {
+    var watcher = new MutationObserver(fitCelebrate);
+    for (var c = 0; c < celebrations.length; c += 1) {
+      watcher.observe(celebrations[c], { attributes: true, attributeFilter: ["class"], childList: true, subtree: true });
+    }
+    root.addEventListener("resize", fitCelebrate);
+    root.addEventListener("orientationchange", fitCelebrate);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(fitCelebrate);
+    }
+  }
+
   root.TinyTapFx = {
     // A right answer: sparkle plus a bright two-note chime.
     good: function (el) {

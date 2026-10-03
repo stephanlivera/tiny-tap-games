@@ -2,7 +2,7 @@
 // games keep working without a connection (car trips, planes, flaky wifi).
 // VERSION and FILES are written by scripts/update-sw.py. Run it after changing site files.
 
-const VERSION = "tiny-tap-b1269d927215";
+const VERSION = "tiny-tap-60ad1fac2f2e";
 const FILES = [
   "./",
   "manifest.json",
