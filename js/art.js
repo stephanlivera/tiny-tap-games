@@ -216,6 +216,44 @@
       );
     },
 
+    // A little car facing right, for Car Wash.
+    car: function (fill) {
+      var GLASS = "#cfeaf1";
+      return wrap(
+        '<path d="M14 78 C14 66 20 60 32 58 L52 54 C60 36 72 26 92 26 L128 26 C146 26 156 38 164 54 L178 58 C188 60 190 68 190 78 L190 88 C190 92 188 94 184 94 L18 94 C15 94 14 92 14 88Z" fill="' + fill + '"/>' +
+        '<path d="M14 80 L190 80 L190 88 C190 92 188 94 184 94 L18 94 C15 94 14 92 14 88Z" fill="' + SHADE + '"/>' +
+        '<path d="M63 54 C68 43 76 35 92 35 L103 35 L103 54Z" fill="' + GLASS + '"/>' +
+        '<path d="M111 35 L127 35 C140 35 148 43 153 54 L111 54Z" fill="' + GLASS + '"/>' +
+        '<path d="M70 50 C73 44 78 40 85 39" fill="none" stroke="' + SHINE + '" stroke-width="4" stroke-linecap="round"/>' +
+        '<path d="M30 66 C44 62 60 61 76 61" fill="none" stroke="' + SHINE + '" stroke-width="5" stroke-linecap="round"/>' +
+        '<path d="M116 66 L128 66" fill="none" stroke="' + SHADE + '" stroke-width="4" stroke-linecap="round"/>' +
+        '<ellipse cx="184" cy="70" rx="4.5" ry="6.5" fill="' + COLORS.yellow + '"/>' +
+        '<rect x="13" y="66" width="6" height="10" rx="3" fill="' + CREAM + '"/>' +
+        '<circle cx="56" cy="94" r="18" fill="' + INK + '"/><circle cx="56" cy="94" r="8" fill="' + CREAM + '"/>' +
+        '<circle cx="150" cy="94" r="18" fill="' + INK + '"/><circle cx="150" cy="94" r="8" fill="' + CREAM + '"/>',
+        "0 0 200 120"
+      );
+    },
+
+    // A splat of mud.
+    mud: function () {
+      return wrap(
+        '<path d="M50 12 C60 4 70 16 68 26 C80 20 94 30 86 44 C98 52 92 70 78 70 C82 84 66 94 56 84 C48 96 30 92 32 78 C16 82 6 64 20 54 C8 42 20 24 34 30 C34 18 42 10 50 12Z" fill="#7a5a3c"/>' +
+        '<path d="M56 84 C66 94 82 84 78 70 C92 70 98 52 86 44 C84 58 74 70 56 84Z" fill="' + SHADE + '"/>' +
+        '<circle cx="40" cy="44" r="6" fill="#93704c"/><circle cx="60" cy="56" r="4" fill="#93704c"/>'
+      );
+    },
+
+    // A soapy sponge.
+    sponge: function () {
+      return wrap(
+        '<path d="M18 40 C18 32 24 28 32 28 L70 26 C80 26 86 32 86 40 L88 70 C88 80 82 86 72 86 L30 88 C20 88 14 82 14 72Z" fill="' + COLORS.yellow + '"/>' +
+        '<path d="M70 26 C80 26 86 32 86 40 L88 70 C88 80 82 86 72 86 L30 88 C56 84 74 70 74 46 C74 38 73 31 70 26Z" fill="' + SHADE + '"/>' +
+        '<circle cx="34" cy="48" r="5" fill="' + SHADE + '"/><circle cx="52" cy="66" r="6" fill="' + SHADE + '"/><circle cx="58" cy="42" r="3.5" fill="' + SHADE + '"/><circle cx="30" cy="70" r="3.5" fill="' + SHADE + '"/>' +
+        '<circle cx="24" cy="26" r="13" fill="' + CREAM + '"/><circle cx="44" cy="18" r="11" fill="' + CREAM + '"/><circle cx="62" cy="24" r="9" fill="' + CREAM + '"/><circle cx="12" cy="42" r="8" fill="' + CREAM + '"/>'
+      );
+    },
+
     circle: function (fill) {
       return wrap(
         '<path d="M50 16 C70 16 84 30 84 50 C84 70 70 84 50 84 C30 84 16 70 16 50 C16 30 30 16 50 16Z" fill="' + fill + '"/>' +

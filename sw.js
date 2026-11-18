@@ -2,7 +2,7 @@
 // games keep working without a connection (car trips, planes, flaky wifi).
 // VERSION and FILES are written by scripts/update-sw.py. Run it after changing site files.
 
-const VERSION = "tiny-tap-b66a3b14cb33";
+const VERSION = "tiny-tap-94363e50dade";
 const FILES = [
   "./",
   "manifest.json",
@@ -98,6 +98,7 @@ const FILES = [
   "assets/voice/tap-r.mp3",
   "assets/voice/tap-s.mp3",
   "assets/voice/tap-t.mp3",
+  "assets/voice/tap-the-animals.mp3",
   "assets/voice/tap-the-apple.mp3",
   "assets/voice/tap-the-apples.mp3",
   "assets/voice/tap-the-balloon.mp3",
@@ -127,6 +128,7 @@ const FILES = [
   "assets/voice/u-for-umbrella.mp3",
   "assets/voice/v-for-van.mp3",
   "assets/voice/w-for-whale.mp3",
+  "assets/voice/wash-the-car.mp3",
   "assets/voice/well-done.mp3",
   "assets/voice/x-for-xray.mp3",
   "assets/voice/y-for-yoyo.mp3",
@@ -134,6 +136,8 @@ const FILES = [
   "assets/voice/z-for-zebra.mp3",
   "games/balloon/game.js",
   "games/balloon/",
+  "games/boop/game.js",
+  "games/boop/",
   "games/count/game.js",
   "games/count/",
   "games/letters/game.js",
@@ -146,6 +150,8 @@ const FILES = [
   "games/peekaboo/",
   "games/shapes/game.js",
   "games/shapes/",
+  "games/wash/game.js",
+  "games/wash/",
 ];
 
 self.addEventListener("install", function (event) {
