@@ -35,6 +35,7 @@ LINES = {
     "pop-the-green-balloons": "Pop the green balloons.",
     "pop-the-purple-balloon": "Pop the purple balloon.",
     "pop-the-purple-balloons": "Pop the purple balloons.",
+    "pop-the-balloons": "Pop the balloons!",
     "tap-the-circle": "Tap the circle.",
     "tap-the-square": "Tap the square.",
     "tap-the-triangle": "Tap the triangle.",

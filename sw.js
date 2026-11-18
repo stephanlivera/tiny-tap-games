@@ -2,7 +2,7 @@
 // games keep working without a connection (car trips, planes, flaky wifi).
 // VERSION and FILES are written by scripts/update-sw.py. Run it after changing site files.
 
-const VERSION = "tiny-tap-59080341454f";
+const VERSION = "tiny-tap-b66a3b14cb33";
 const FILES = [
   "./",
   "manifest.json",
@@ -54,6 +54,7 @@ const FILES = [
   "assets/voice/oval.mp3",
   "assets/voice/owl.mp3",
   "assets/voice/p-for-pig.mp3",
+  "assets/voice/pop-the-balloons.mp3",
   "assets/voice/pop-the-blue-balloon.mp3",
   "assets/voice/pop-the-blue-balloons.mp3",
   "assets/voice/pop-the-green-balloon.mp3",
@@ -139,6 +140,8 @@ const FILES = [
   "games/letters/",
   "games/match/game.js",
   "games/match/",
+  "games/party/game.js",
+  "games/party/",
   "games/peekaboo/game.js",
   "games/peekaboo/",
   "games/shapes/game.js",

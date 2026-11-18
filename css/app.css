@@ -278,6 +278,7 @@ body.home {
 .game-card:nth-child(4) { --card: var(--yellow); --tilt: 1.5deg; animation-delay: 180ms; }
 .game-card:nth-child(5) { --card: var(--purple); --tilt: -1.2deg; animation-delay: 240ms; }
 .game-card:nth-child(6) { --card: var(--orange); --tilt: 0.9deg; animation-delay: 300ms; }
+.game-card:nth-child(7) { --card: var(--teal); --tilt: -1deg; animation-delay: 360ms; }
 
 .game-card:active {
   transform: rotate(var(--tilt, 0deg)) scale(0.95);
@@ -897,6 +898,104 @@ body:has(.game-shell) {
   .playfield[data-count="7"] .balloon {
     width: min(6.6rem, 27vw, 19vh);
   }
+}
+
+/* ---------- Pop Party: balloons moved by games/party/game.js ---------- */
+
+.party-field {
+  /* A finger dragged across the sky pops balloons instead of scrolling. */
+  touch-action: none;
+}
+
+.party-balloon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: var(--w);
+  aspect-ratio: 2 / 3;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.party-body {
+  width: 100%;
+  height: 100%;
+  scale: var(--grow, 1);
+  transform-origin: 50% 40%;
+  filter: var(--lift-big);
+  transition: scale 260ms var(--spring);
+}
+
+.party-body .art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.party-balloon.fresh .party-body {
+  animation: pop-in 420ms var(--spring) backwards;
+}
+
+.party-balloon.star .party-body {
+  animation: party-twinkle 700ms ease-in-out infinite alternate;
+}
+
+.party-balloon .party-body.puff {
+  animation: party-puff 380ms var(--spring);
+}
+
+.party-balloon .party-body.hint {
+  animation: hint 1.2s ease-in-out;
+}
+
+.party-balloon .party-body.burst {
+  animation: burst 240ms ease-out forwards;
+}
+
+.party-shard,
+.party-ring {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.party-shard {
+  width: 0.9rem;
+  height: 1.2rem;
+  margin: -0.6rem 0 0 -0.45rem;
+  background: var(--c);
+  clip-path: polygon(8% 0, 100% 14%, 78% 100%, 0 72%);
+  animation: spark 520ms ease-out forwards;
+}
+
+.party-shard:nth-of-type(3n) {
+  clip-path: polygon(50% 0, 100% 100%, 0 82%);
+}
+
+.party-ring {
+  width: var(--d);
+  height: var(--d);
+  margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2);
+  border: 0.3rem solid var(--cream);
+  border-radius: 50%;
+  animation: party-ring 320ms ease-out forwards;
+}
+
+@keyframes party-twinkle {
+  from { transform: scale(1) rotate(-3deg); }
+  to { transform: scale(1.09) rotate(3deg); }
+}
+
+@keyframes party-puff {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  30% { transform: rotate(-9deg) scale(1.12); }
+  65% { transform: rotate(7deg) scale(1.04); }
+}
+
+@keyframes party-ring {
+  from { transform: scale(0.4); opacity: 0.95; }
+  to { transform: scale(1.3); opacity: 0; }
 }
 
 /* ---------- Peekaboo: a street of little houses ---------- */

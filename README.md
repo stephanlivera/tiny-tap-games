@@ -1,6 +1,6 @@
 # Tiny Tap Games
 
-Simple educational web games for young kids. Big tap targets, short rounds, no accounts, no ads, no tracking.
+Simple web games for young kids, mostly educational. Big tap targets, short rounds, no accounts, no ads, no tracking.
 
 This is a static site. Any web server that can serve files is enough — including a VPS behind nginx or Caddy.
 
@@ -26,6 +26,7 @@ On a tablet on the same network, use the computer's LAN address instead of `loca
 | Peekaboo Doors | Playable | Animal words; cause-and-effect tapping |
 | Match the Pairs | Playable | Matching animals and a star |
 | Letter Hunt | Playable | All 26 letter names, each with a word |
+| Pop Party | Playable | Nothing. Just for fun |
 
 Count the Things: tap each object once. The tally grows, then the round shows the numeral and the English word (`three`, `four`, …).
 
@@ -43,6 +44,8 @@ Match the Pairs: flip two cards. Matching pairs stay up. Mismatches flip back. W
 
 Letter Hunt: tap the named letter among the big blocks. The round then says the letter and a word (`A is for apple`).
 
+Pop Party: balloons float up from the grass. Tap them, or drag a finger across them, to pop them. Quick pops in a row ring up a scale. The yellow star balloon pops every balloon on screen. The big smiling balloon takes three taps, then bursts into five little ones. Balloons that float away are not counted against anyone.
+
 ## Levels
 
 Every game starts easy. Each time the row of five stars fills, the game moves up a level for the rest of that visit, and the stars change colour (gold, then orange, then purple). A fresh visit starts at level 1 again, so a younger sibling never lands on the hard version.
@@ -55,6 +58,7 @@ Every game starts easy. Each time the row of five stars fills, the game moves up
 | Peekaboo | 3 houses | 4 | 5 (4 on narrow phones) |
 | Pairs | 4 pairs | 5 | 6 |
 | Letters | 8 letters, 4 tiles | 16 letters | all 26, 6 tiles |
+| Pop Party | pop 12, slow balloons | pop 16, faster | pop 20, fastest |
 
 ## Helping little players
 

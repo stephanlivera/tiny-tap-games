@@ -176,14 +176,43 @@
       );
     },
 
-    balloon: function (fill) {
+    // deco: "star" puts a paper star on the front, "face" gives it a happy face.
+    balloon: function (fill, deco) {
+      var front = "";
+      if (deco === "star") {
+        front =
+          '<path d="M40 24 L44.6 35 L56.4 35.9 L47.3 43.5 L50.2 55 L40 48.7 L29.8 55 L32.7 43.5 L23.6 35.9 L35.4 35Z" fill="' + CREAM +
+          '" stroke="' + CREAM + '" stroke-width="3" stroke-linejoin="round"/>';
+      } else if (deco === "face") {
+        front = eye(31, 40, 3) + eye(49, 40, 3) + smile(40, 49, 11) + cheek(24, 49) + cheek(56, 49);
+      }
       return wrap(
         '<path d="M40 6 C60 6 71 24 71 42 C71 62 55 78 40 78 C25 78 9 62 9 42 C9 24 20 6 40 6Z" fill="' + fill + '"/>' +
         '<path d="M58 16 C67 24 71 34 71 42 C71 62 55 78 40 78 C52 70 60 56 60 40 C60 30 60 22 58 16Z" fill="' + SHADE + '"/>' +
         '<path d="M20 30 C22 21 28 15 35 13" fill="none" stroke="' + SHINE + '" stroke-width="5.5" stroke-linecap="round"/>' +
+        front +
         '<path d="M34 78 L46 78 L40 86Z" fill="' + fill + '" stroke="' + fill + '" stroke-width="2" stroke-linejoin="round"/>' +
         '<path d="M40 86 C34 98 46 106 39 118" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/>',
         "0 0 80 120"
+      );
+    },
+
+    // A bunch of three balloons, for the Pop Party home tile.
+    balloonBunch: function () {
+      function one(fill, x, y, turn) {
+        return (
+          '<g transform="translate(' + x + " " + y + ') scale(0.5) rotate(' + turn + ' 40 42)">' +
+          '<path d="M40 6 C60 6 71 24 71 42 C71 62 55 78 40 78 C25 78 9 62 9 42 C9 24 20 6 40 6Z" fill="' + fill + '"/>' +
+          '<path d="M58 16 C67 24 71 34 71 42 C71 62 55 78 40 78 C52 70 60 56 60 40 C60 30 60 22 58 16Z" fill="' + SHADE + '"/>' +
+          '<path d="M20 30 C22 21 28 15 35 13" fill="none" stroke="' + SHINE + '" stroke-width="5.5" stroke-linecap="round"/>' +
+          '<path d="M34 78 L46 78 L40 86Z" fill="' + fill + '" stroke="' + fill + '" stroke-width="2" stroke-linejoin="round"/>' +
+          "</g>"
+        );
+      }
+      return wrap(
+        '<path d="M29 57 Q40 76 50 97 M71 57 Q60 76 50 97 M50 46 Q47 72 50 97" fill="none" stroke="' + INK +
+        '" stroke-width="1.8" stroke-linecap="round"/>' +
+        one(COLORS.blue, 4, 14, -14) + one(COLORS.yellow, 56, 14, 14) + one(COLORS.red, 30, 3, 0)
       );
     },
 

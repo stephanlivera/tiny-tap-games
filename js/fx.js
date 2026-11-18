@@ -274,6 +274,8 @@
       addStar();
       tones(won >= STARS ? [523, 659, 784, 1047, 1319, 1568] : [523, 659, 784, 1047], 0.11);
     },
+    // Play soft bell notes (frequencies in Hz), `gap` seconds apart.
+    tones: tones,
     // Restart a one-shot CSS animation class on an element.
     bump: bump,
     // Current level: 1, then one higher for each full row of stars.
